@@ -1,12 +1,14 @@
 <?php
 
-namespace DingNotice\Messages;
+namespace DingNotice\Messages\DingTalk;
 
 use DingNotice\DingTalkService;
 
 class FeedCard extends Message
 {
     protected $service;
+
+    protected $messageType = 'feedCard';
 
     public function __construct(DingTalkService $service)
     {
@@ -16,16 +18,13 @@ class FeedCard extends Message
     }
 
     public function setMessage(){
-        $this->message = [
-            'feedCard' => [
-                'links' => []
-            ],
-            'msgtype' => 'feedCard'
-        ];
+        $this->makeMessage([
+            'links' => []
+        ]);
     }
 
     public function addLinks($title,$messageUrl,$picUrl){
-        $this->message['feedCard']['links'][] = [
+        $this->message[$this->messageType]['links'][] = [
             'title' => $title,
             'messageURL' => $messageUrl,
             'picURL' => $picUrl

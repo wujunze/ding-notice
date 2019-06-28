@@ -6,7 +6,7 @@
  * Time: 20:37
  */
 
-namespace DingNotice;
+namespace DingNotice\Clients;
 
 
 interface SendClient

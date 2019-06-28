@@ -2,54 +2,23 @@
 
 namespace DingNotice;
 
-use DingNotice\Messages\ActionCard;
-use DingNotice\Messages\FeedCard;
-use DingNotice\Messages\Link;
-use DingNotice\Messages\Markdown;
-use DingNotice\Messages\Message;
-use DingNotice\Messages\Text;
-use GuzzleHttp\Client;
+use DingNotice\Clients\DingTalkClient;
+use DingNotice\Clients\HttpClient;
+use DingNotice\Messages\DingTalk\ActionCard;
+use DingNotice\Messages\DingTalk\FeedCard;
+use DingNotice\Messages\DingTalk\Link;
+use DingNotice\Messages\DingTalk\Markdown;
+use DingNotice\Messages\DingTalk\Message;
+use DingNotice\Messages\DingTalk\Text;
 
-class DingTalkService
+class DingTalkService extends NoticeService
 {
-
-    protected $config;
 
     /**
      * @var Message
      */
     protected $message;
-    /**
-     * @var array
-     */
-    protected $mobiles = [];
-    /**
-     * @var bool
-     */
-    protected $atAll = false;
 
-    /**
-     * @var SendClient
-     */
-    protected $client;
-
-    /**
-     * DingTalkService constructor.
-     * @param $config
-     * @param null $client
-     */
-    public function __construct($config, SendClient $client = null)
-    {
-        $this->config = $config;
-        $this->setTextMessage('null');
-
-        if ($client != null) {
-            $this->client = $client;
-            return;
-        }
-        $this->client = $this->createClient($config);
-
-    }
 
     /**
      * @param Message $message
@@ -78,17 +47,6 @@ class DingTalkService
         if ($this->message) {
             $this->message->sendAt($mobiles, $atAll);
         }
-    }
-
-    /**
-     * create a guzzle client
-     * @return HttpClient
-     * @author wangju 2019-05-17 20:25
-     */
-    protected function createClient($config)
-    {
-        $client = new HttpClient($config);
-        return $client;
     }
 
 
@@ -155,14 +113,13 @@ class DingTalkService
     }
 
     /**
-     * @return bool|array
+     * create a guzzle client
+     * @return HttpClient
+     * @author wangju 2019-05-17 20:25
      */
-    public function send()
+    protected function createClient($config)
     {
-        if (!$this->config['enabled']) {
-            return false;
-        }
-        return $this->client->send($this->message->getBody());
+        $client = new DingTalkClient($config);
+        return $client;
     }
-
 }

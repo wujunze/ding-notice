@@ -6,19 +6,20 @@
  * Time: 20:38
  */
 
-namespace DingNotice;
+namespace DingNotice\Clients;
 
 
 use GuzzleHttp\Client;
 
-class HttpClient implements SendClient
+abstract class HttpClient implements SendClient
 {
     protected $client;
     protected $config;
+
     /**
      * @var string
      */
-    protected $hookUrl = "https://oapi.dingtalk.com/robot/send";
+    protected $hookUrl;
 
     /**
      * @var string
@@ -52,12 +53,12 @@ class HttpClient implements SendClient
         return $client;
     }
 
+
+
     /**
      * @return string
      */
-    public function getRobotUrl(){
-        return $this->hookUrl . "?access_token={$this->accessToken}";
-    }
+    abstract function getRobotUrl();
 
     /**
      * send message
@@ -68,6 +69,11 @@ class HttpClient implements SendClient
      */
     public function send($params): array
     {
+
+        echo "\n";
+        echo $this->getRobotUrl();
+        echo "\n";
+
         $request = $this->client->post($this->getRobotUrl(), [
             'body' => json_encode($params),
             'headers' => [

@@ -31,7 +31,7 @@ class TextTest extends TestCase
      *
      * @return void
      */
-    public function testPushTextMessage()
+    public function test_push_ding_talk_message()
     {
         $result =$this->ding->text("我就是我,@{$this->testUser} 是不一样的烟火");
         $this->assertSame([
@@ -40,7 +40,7 @@ class TextTest extends TestCase
         ],$result);
     }
 
-    public function testPushTextMessageAtAllUser(){
+    public function test_push_ding_talk_text_message_at_all_user(){
         $result =$this->ding
             ->at([],true)
             ->text("我就是我,@{$this->testUser} 是不一样的烟火");
@@ -48,5 +48,17 @@ class TextTest extends TestCase
             'errmsg' => 'ok',
             'errcode' => 0
         ],$result);
+    }
+
+    public function test_push_wechat_message(){
+        $result = $this->wechat
+            ->text('hello world');
+    }
+
+    public function test_push_wechat_message_at_all_user(){
+        $result = $this->wechat
+            ->at([],[],true)
+            ->text('hello world');
+        print_r($result);
     }
 }

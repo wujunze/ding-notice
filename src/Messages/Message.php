@@ -1,5 +1,4 @@
 <?php
-
 namespace DingNotice\Messages;
 
 abstract class Message
@@ -7,24 +6,25 @@ abstract class Message
     protected $message = [];
     protected $at;
 
+    protected $messageType = '';
+
 
     public function getMessage(){
         return $this->message;
     }
 
-    protected function makeAt($mobiles = [],$atAll = false){
-        return [
-            'at' => [
-                'atMobiles' => $mobiles,
-                'isAtAll' => $atAll
-            ]
-        ];
-    }
-
-    public function sendAt($mobiles = [],$atAll = false){
-        $this->at = $this->makeAt($mobiles,$atAll);
+    protected function makeMessage($message)
+    {
+        if ($this->messageType){
+            $message  = [
+                'msgtype' => $this->messageType,
+                $this->messageType => $message
+            ];
+        }
+        $this->message = $message;
         return $this;
     }
+
 
     public function getBody(){
 
