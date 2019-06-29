@@ -2,6 +2,8 @@
 
 namespace DingNotice;
 
+use DingNotice\Clients\SendClient;
+
 class DingTalk
 {
 

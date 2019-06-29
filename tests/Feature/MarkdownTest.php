@@ -35,7 +35,7 @@ class MarkDownTest extends TestCase
      *
      * @return void
      */
-    public function testPushMarkdownMessage()
+    public function test_push_dingtalk_markdown_message()
     {
         $result =$this->ding->markdown($this->title,$this->markdown);
         $this->assertSame([
@@ -44,7 +44,7 @@ class MarkDownTest extends TestCase
         ],$result);
     }
 
-    public function testPushMarkdownMessageAtAllUser(){
+    public function test_push_dingtalk_markdown_message_at_all_user(){
         $result =$this->ding
             ->at([],true)
             ->markdown($this->title,$this->markdown);
@@ -52,5 +52,16 @@ class MarkDownTest extends TestCase
             'errmsg' => 'ok',
             'errcode' => 0
         ],$result);
+    }
+
+    public function test_push_wechat_markdown_message()
+    {
+        $result = $this->wechat
+            ->markdown($this->markdown);
+        $this->assertSame([
+            'errcode' => 0,
+            'errmsg' => 'ok',
+        ],$result);
+
     }
 }

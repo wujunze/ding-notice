@@ -12,11 +12,10 @@ class Message extends BaseMessage
     {
         if ($atAll){
             $users[] = "@all";
-            $mobiles = "@all";
         }
         return [
-            'mentioned_list' => $users,
-            'mentioned_mobile_list' => $mobiles
+            'mentioned_list' => array_unique($users),
+            'mentioned_mobile_list' =>array_unique($mobiles)
         ];
     }
 

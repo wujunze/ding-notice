@@ -4,10 +4,10 @@
 namespace DingNotice;
 
 use DingNotice\Clients\SendClient;
+use DingNotice\Messages\Wechat\News;
 
 class Wechat
 {
-
     /**
      * @var
      */
@@ -23,6 +23,10 @@ class Wechat
      */
     protected $service;
 
+    /**
+     * @var SendClient|null
+     */
+    protected $client;
 
 
     /**
@@ -61,14 +65,14 @@ class Wechat
     }
 
     /**
-     * @param $title
-     * @param $text
+     * @param $url
      * @return mixed
      */
-    public function action($title, $text)
+    public function image($url)
     {
         return $this->service
-            ->setActionCardMessage($title, $text);
+            ->setImageMessage($url)
+            ->send();
     }
 
     /**
@@ -76,59 +80,32 @@ class Wechat
      * @param bool $atAll
      * @return $this
      */
-    public function at($mobiles = [], $atAll = false)
+    public function at($users, $mobiles = [], $atAll = false)
     {
         $this->service
-            ->setAt($mobiles, $atAll);
+            ->setAt($users, $mobiles, $atAll);
         return $this;
     }
 
     /**
      * @param $title
-     * @param $text
-     * @param $url
-     * @param string $picUrl
+     * @param $markdown
      * @return mixed
      */
-    public function link($title, $text, $url, $picUrl = '')
+    public function markdown($markdown)
     {
         return $this->service
-            ->setLinkMessage($title, $text, $url, $picUrl)
+            ->setMarkdownMessage($markdown)
             ->send();
     }
 
     /**
-     * @param $title
-     * @param $markdown
-     * @return mixed
+     * @return News
      */
-    public function markdown($title, $markdown)
+    public function news()
     {
         return $this->service
-            ->setMarkdownMessage($title, $markdown)
-            ->send();
-    }
-
-    /**
-     * @param $title
-     * @param $markdown
-     * @param int $hideAvatar
-     * @param int $btnOrientation
-     * @return mixed
-     */
-    public function actionCard($title, $markdown, $hideAvatar = 0, $btnOrientation = 0)
-    {
-        return $this->service
-            ->setActionCardMessage($title, $markdown, $hideAvatar, $btnOrientation);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function feed()
-    {
-        return $this->service
-            ->setFeedCardMessage();
+            ->setNewsMessage();
     }
 
 }

@@ -2,7 +2,6 @@
 
 namespace DingNotice\Tests\Feature;
 
-use DingNotice\SendClient;
 use DingNotice\Tests\TestCase;
 
 
@@ -53,12 +52,20 @@ class TextTest extends TestCase
     public function test_push_wechat_message(){
         $result = $this->wechat
             ->text('hello world');
+        $this->assertSame([
+            'errcode' => 0,
+            'errmsg' => 'ok'
+        ], $result);
     }
 
-    public function test_push_wechat_message_at_all_user(){
+    public function test_push_wechat_message_at_all_user()
+    {
         $result = $this->wechat
-            ->at([],[],true)
+            ->at([], [], true)
             ->text('hello world');
-        print_r($result);
+        $this->assertSame([
+            'errcode' => 0,
+            'errmsg' => 'ok'
+        ], $result);
     }
 }

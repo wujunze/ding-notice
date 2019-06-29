@@ -1,6 +1,8 @@
 <?php
 
 return [
+    
+    'default' => 'dingtalk',
 
     'dingtalk' => [
         // 默认发送的机器人

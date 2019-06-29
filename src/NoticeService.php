@@ -66,6 +66,14 @@ abstract class NoticeService
 
     }
 
+    /**
+     * @param Message $message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
 
     abstract protected function createClient($config);
 

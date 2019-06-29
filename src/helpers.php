@@ -1,13 +1,17 @@
 <?php
 
 use DingNotice\DingTalk;
+use DingNotice\Notice;
+use DingNotice\Wechat;
 
-if (!function_exists('ding')){
+if (!function_exists('ding')) {
 
     /**
      * @return bool|DingTalk
+     * @deprecated
      */
-    function ding(){
+    function ding()
+    {
 
         $arguments = func_get_args();
 
@@ -22,5 +26,18 @@ if (!function_exists('ding')){
             return $dingTalk->with($robot)->text($arguments[0]);
         }
 
+    }
+}
+
+if (!function_exists('notice')) {
+
+    /**
+     * @return bool|DingTalk|Wechat
+     */
+    function notice($driver = 'dingtalk')
+    {
+        $class = Notice::driver($driver);
+        $notice = app($class);
+        return $notice;
     }
 }

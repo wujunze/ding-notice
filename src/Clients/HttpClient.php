@@ -69,11 +69,6 @@ abstract class HttpClient implements SendClient
      */
     public function send($params): array
     {
-
-        echo "\n";
-        echo $this->getRobotUrl();
-        echo "\n";
-
         $request = $this->client->post($this->getRobotUrl(), [
             'body' => json_encode($params),
             'headers' => [

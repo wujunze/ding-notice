@@ -21,14 +21,6 @@ class DingTalkService extends NoticeService
 
 
     /**
-     * @param Message $message
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
-
-    /**
      * @return array
      */
     public function getMessage()
